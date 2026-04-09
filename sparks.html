@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>LA Sparks HQ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #702F8A;
+    --gold: #FFC72C;
+    --teal: #00B398;
+    --dark-bg: #0e0812;
+    --card-bg: #170f1e;
+    --card-hover: #1e1428;
+    --white: #ffffff;
+    --border: #2a1f35;
+    --muted: #a08bb5;
+    --tab-height: 64px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    font-family: 'Roboto', sans-serif;
+    background: var(--dark-bg);
+    color: var(--white);
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ââ Hero ââ */
+  .hero {
+    position: relative;
+    text-align: center;
+    padding: 1.5rem 1rem 1rem;
+    background: linear-gradient(180deg, #1a0e24 0%, var(--dark-bg) 100%);
+    border-bottom: 2px solid var(--purple);
+    flex-shrink: 0;
+  }
+
+  .hero-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .shield { width: 52px; height: 52px; flex-shrink: 0; }
+  .shield svg { width: 100%; height: 100%; }
+
+  .hero-text { text-align: left; }
+
+  .hero h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .hero .tagline {
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-top: 0.2rem;
+  }
+
+  /* ââ Tab Content ââ */
+  .tab-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 1rem;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ââ Schedule ââ */
+  .schedule-notice {
+    margin: 1rem 1rem 0.5rem;
+    padding: 0.7rem 1rem;
+    background: rgba(112,47,138,0.1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 0.75rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.4;
+  }
+
+  .schedule-notice strong { color: var(--gold); }
+
+  .schedule-links {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.75rem 1rem;
+  }
+
+  .schedule-links a {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.6rem 0.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: border-color 0.2s;
+  }
+
+  .schedule-links a:hover { border-color: var(--purple); }
+  .schedule-links a svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+  /* Month dividers */
+  .month-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--purple);
+    padding: 0.9rem 0 0.3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0;
+  }
+
+  .game-list { list-style: none; margin: 0 1rem; }
+
+  .game-item {
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid rgba(42,31,53,0.6);
+    gap: 0.65rem;
+  }
+
+  .game-item:last-child { border-bottom: none; }
+
+  .game-date {
+    width: 44px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .game-date .day {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .game-date .dow {
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+
+  .game-info { flex: 1; min-width: 0; }
+
+  .game-opponent {
+    font-weight: 600;
+    font-size: 0.88rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .game-meta {
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-top: 0.05rem;
+  }
+
+  .badge-home, .badge-away {
+    display: inline-block;
+    font-size: 0.55rem;
+    font-weight: 700;
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
+    margin-left: 0.35rem;
+  }
+
+  .badge-home {
+    background: rgba(112,47,138,0.3);
+    color: var(--gold);
+  }
+
+  .badge-away {
+    background: rgba(255,255,255,0.06);
+    color: var(--muted);
+  }
+
+  /* ââ Link panels ââ */
+  .link-list { list-style: none; margin: 0.75rem 1rem 0; }
+
+  .link-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin-bottom: 0.6rem;
+    transition: border-color 0.2s;
+  }
+
+  .link-item:hover { border-color: var(--purple); }
+
+  .link-item a {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 1rem;
+    color: var(--white);
+    text-decoration: none;
+    gap: 0.75rem;
+  }
+
+  .link-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .link-icon svg { width: 20px; height: 20px; }
+
+  .link-icon.purple-bg { background: rgba(112,47,138,0.2); }
+  .link-icon.gold-bg { background: rgba(255,199,44,0.15); }
+  .link-icon.teal-bg { background: rgba(0,179,152,0.15); }
+
+  .link-text { flex: 1; min-width: 0; }
+  .link-text strong { display: block; font-size: 0.9rem; font-weight: 600; }
+  .link-text span { display: block; font-size: 0.72rem; color: var(--muted); margin-top: 0.1rem; }
+
+  .link-arrow {
+    color: var(--muted);
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+
+  .link-item:hover .link-arrow { transform: translateX(3px); }
+
+  /* ââ Bottom Tab Bar ââ */
+  .tab-bar {
+    display: flex;
+    background: #130d1a;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+    height: var(--tab-height);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .tab-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    background: none;
+    border: none;
+    color: #4a3860;
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: color 0.2s;
+    position: relative;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tab-btn svg { width: 22px; height: 22px; }
+  .tab-btn.active { color: var(--gold); }
+
+  .tab-btn.active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 25%;
+    right: 25%;
+    height: 2px;
+    background: var(--purple);
+    border-radius: 0 0 2px 2px;
+  }
+
+  .tab-content::-webkit-scrollbar { width: 4px; }
+  .tab-content::-webkit-scrollbar-track { background: transparent; }
+  .tab-content::-webkit-scrollbar-thumb { background: #2a1f35; border-radius: 2px; }
+
+  @keyframes pulse {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(112,47,138,0.4)); }
+    50% { filter: drop-shadow(0 0 16px rgba(255,199,44,0.5)); }
+  }
+  .shield svg { animation: pulse 3s ease-in-out infinite; }
+
+  .panel-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--muted);
+    padding: 1rem 1rem 0.25rem;
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ââ Hero ââ -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="shield">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Basketball with spark -->
+          <circle cx="50" cy="50" r="38" fill="none" stroke="#702F8A" stroke-width="3"/>
+          <ellipse cx="50" cy="50" rx="14" ry="38" fill="none" stroke="#702F8A" stroke-width="2"/>
+          <line x1="12" y1="50" x2="88" y2="50" stroke="#702F8A" stroke-width="2"/>
+          <!-- Spark/star -->
+          <polygon points="50,12 54,22 64,22 56,28 59,38 50,32 41,38 44,28 36,22 46,22" fill="#FFC72C"/>
+        </svg>
+      </div>
+      <div class="hero-text">
+        <h1>LA Sparks</h1>
+        <p class="tagline">Sparks Fan HQ</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ââ Tab Panels ââ -->
+  <div class="tab-content">
+
+    <!-- âââ SCHEDULE âââ -->
+    <div class="tab-panel active" id="panel-schedule">
+      <div class="schedule-notice">
+        <strong>2026 WNBA Season</strong> â 30th Anniversary<br>
+        44 games Â· May 10 â Sept 28 Â· Crypto.com Arena
+      </div>
+
+      <div class="schedule-links">
+        <a href="https://sparks.wnba.com/schedule" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Sparks.com
+        </a>
+        <a href="https://www.espn.com/wnba/team/schedule/_/name/la/los-angeles-sparks" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          ESPN
+        </a>
+        <a href="https://www.axs.com/teams/113921/la-sparks-tickets" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 9a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v0a3 3 0 0 1-3 3h0"/><path d="M2 15a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v0a3 3 0 0 0-3-3h0"/></svg>
+          Tickets
+        </a>
+      </div>
+
+      <ul class="game-list">
+
+        <!-- MAY -->
+        <li class="month-label">May</li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">10</div><div class="dow">Sat</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Las Vegas Aces <span class="badge-home">Home</span></div>
+            <div class="game-meta">Season Opener Â· Crypto.com Arena</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">13</div><div class="dow">Tue</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Indiana Fever <span class="badge-home">Home</span></div>
+            <div class="game-meta">Crypto.com Arena</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">15</div><div class="dow">Thu</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Toronto Tempo <span class="badge-home">Home</span></div>
+            <div class="game-meta">Inaugural Matchup Â· Crypto.com Arena</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">21</div><div class="dow">Wed</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Phoenix Mercury <span class="badge-away">Away</span></div>
+            <div class="game-meta">Footprint Center</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">23</div><div class="dow">Fri</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Las Vegas Aces <span class="badge-away">Away</span></div>
+            <div class="game-meta">Michelob ULTRA Arena</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">30</div><div class="dow">Fri</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Connecticut Sun <span class="badge-away">Away</span></div>
+            <div class="game-meta">Hartford</div>
+          </div>
+        </li>
+
+        <!-- JUNE -->
+        <li class="month-label">June</li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">2</div><div class="dow">Tue</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Las Vegas Aces <span class="badge-home">Home</span></div>
+            <div class="game-meta">Crypto.com Arena</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">5</div><div class="dow">Fri</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Dallas Wings <span class="badge-home">Home</span></div>
+            <div class="game-meta">Crypto.com Arena</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">7</div><div class="dow">Sun</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Portland Fire <span class="badge-home">Home</span></div>
+            <div class="game-meta">First Home Game vs Portland since '02</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">13</div><div class="dow">Sat</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Phoenix Mercury <span class="badge-away">Away</span></div>
+            <div class="game-meta">Footprint Center</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">21</div><div class="dow">Sun</div></div>
+          <div class="game-info">
+            <div class="game-opponent">New York Liberty <span class="badge-home">Home</span></div>
+            <div class="game-meta">Anniversary of WNBA's 1st Game</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">25</div><div class="dow">Thu</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Toronto Tempo <span class="badge-away">Away</span></div>
+            <div class="game-meta">Coca-Cola Coliseum</div>
+          </div>
+        </li>
+
+        <!-- JULY -->
+        <li class="month-label">July</li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">8</div><div class="dow">Wed</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Indiana Fever <span class="badge-home">Home</span></div>
+            <div class="game-meta">Crypto.com Arena</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">19</div><div class="dow">Sun</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Dallas Wings <span class="badge-away">Away</span></div>
+            <div class="game-meta">College Park Center</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">22</div><div class="dow">Wed</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Phoenix Mercury <span class="badge-home">Home</span></div>
+            <div class="game-meta">Crypto.com Arena</div>
+          </div>
+        </li>
+        <li class="game-item" style="opacity:0.5">
+          <div class="game-date"><div class="day">24</div><div class="dow">Fri</div></div>
+          <div class="game-info">
+            <div class="game-opponent" style="color:var(--gold)">WNBA All-Star Weekend</div>
+            <div class="game-meta">Chicago, IL</div>
+          </div>
+        </li>
+
+        <!-- AUGUST -->
+        <li class="month-label">August</li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">11</div><div class="dow">Tue</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Phoenix Mercury <span class="badge-home">Home</span></div>
+            <div class="game-meta">Crypto.com Arena</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">18</div><div class="dow">Tue</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Connecticut Sun <span class="badge-away">Away</span></div>
+            <div class="game-meta">Boston</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">28</div><div class="dow">Thu</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Washington Mystics <span class="badge-home">Home</span></div>
+            <div class="game-meta">Crypto.com Arena</div>
+          </div>
+        </li>
+
+        <!-- SEPTEMBER -->
+        <li class="month-label">September</li>
+        <li class="game-item" style="opacity:0.5">
+          <div class="game-date"><div class="day">1</div><div class="dow">â</div></div>
+          <div class="game-info">
+            <div class="game-opponent" style="color:var(--teal)">FIBA World Cup Break</div>
+            <div class="game-meta">Aug 31 â Sept 16</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">17</div><div class="dow">Thu</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Dallas Wings <span class="badge-away">Away</span></div>
+            <div class="game-meta">College Park Center</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">22</div><div class="dow">Tue</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Las Vegas Aces <span class="badge-away">Away</span></div>
+            <div class="game-meta">Michelob ULTRA Arena</div>
+          </div>
+        </li>
+        <li class="game-item">
+          <div class="game-date"><div class="day">24</div><div class="dow">Thu</div></div>
+          <div class="game-info">
+            <div class="game-opponent">Golden State Valkyries <span class="badge-home">Home</span></div>
+            <div class="game-meta">Crypto.com Arena</div>
+          </div>
+        </li>
+      </ul>
+
+      <div style="text-align:center; padding:1rem; font-size:0.7rem; color:var(--muted);">
+        Showing key matchups Â· <a href="https://sparks.wnba.com/schedule" target="_blank" rel="noopener" style="color:var(--gold); text-decoration:none;">View full 44-game schedule â</a>
+      </div>
+    </div>
+
+    <!-- âââ HIGHLIGHTS âââ -->
+    <div class="tab-panel" id="panel-highlights">
+      <p class="panel-title">Watch</p>
+      <ul class="link-list">
+        <li class="link-item">
+          <a href="https://sparks.wnba.com/video" target="_blank" rel="noopener">
+            <div class="link-icon purple-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#702F8A" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>Sparks Official Videos</strong>
+              <span>Game highlights, interviews &amp; recaps</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+        <li class="link-item">
+          <a href="https://www.youtube.com/@LASparks" target="_blank" rel="noopener">
+            <div class="link-icon purple-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#702F8A" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="4"/><polygon points="10,8 16,12 10,16"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>Sparks YouTube</strong>
+              <span>Full game recaps &amp; behind-the-scenes</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+        <li class="link-item">
+          <a href="https://www.wnba.com/team/1611661319/los-angeles-sparks/videos" target="_blank" rel="noopener">
+            <div class="link-icon gold-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#FFC72C" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>WNBA.com Videos</strong>
+              <span>League highlights &amp; top plays</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+        <li class="link-item">
+          <a href="https://www.youtube.com/results?search_query=LA+Sparks+highlights+2026" target="_blank" rel="noopener">
+            <div class="link-icon gold-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#FFC72C" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>Search YouTube Highlights</strong>
+              <span>Fan breakdowns, reactions &amp; analysis</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+      </ul>
+
+      <p class="panel-title" style="margin-top:0.5rem">News &amp; Coverage</p>
+      <ul class="link-list">
+        <li class="link-item">
+          <a href="https://bleacherreport.com/los-angeles-sparks" target="_blank" rel="noopener">
+            <div class="link-icon teal-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00B398" stroke-width="2"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>Bleacher Report</strong>
+              <span>Scores, highlights &amp; analysis</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+        <li class="link-item">
+          <a href="https://www.yardbarker.com/wnba/teams/los_angeles_sparks/17272" target="_blank" rel="noopener">
+            <div class="link-icon teal-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00B398" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>Yardbarker</strong>
+              <span>Sparks news, rumors &amp; videos</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- âââ DISCUSSION âââ -->
+    <div class="tab-panel" id="panel-discuss">
+      <p class="panel-title">Join the Conversation</p>
+      <ul class="link-list">
+        <li class="link-item">
+          <a href="https://www.reddit.com/r/losangelessparks/" target="_blank" rel="noopener">
+            <div class="link-icon purple-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#702F8A" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r="1" fill="#702F8A"/><circle cx="15" cy="10" r="1" fill="#702F8A"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>r/losangelessparks</strong>
+              <span>Reddit fan community</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+        <li class="link-item">
+          <a href="https://www.reddit.com/r/wnba/" target="_blank" rel="noopener">
+            <div class="link-icon purple-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#702F8A" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><circle cx="9" cy="10" r="1" fill="#702F8A"/><circle cx="15" cy="10" r="1" fill="#702F8A"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>r/wnba</strong>
+              <span>League-wide discussion &amp; Sparks game threads</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+        <li class="link-item">
+          <a href="https://www.silverscreenandroll.com/los-angeles-sparks-wnba" target="_blank" rel="noopener">
+            <div class="link-icon gold-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#FFC72C" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>Silver Screen &amp; Roll</strong>
+              <span>SB Nation â Sparks news &amp; fan takes</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+        <li class="link-item">
+          <a href="https://x.com/i/communities/1790528178668396745" target="_blank" rel="noopener">
+            <div class="link-icon gold-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#FFC72C" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733-16z"/><path d="M4 20l6.768-6.768"/><path d="M20 4l-6.768 6.768"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>Sparks Fans on X</strong>
+              <span>Community â live reactions &amp; game chat</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+        <li class="link-item">
+          <a href="https://sparks.wnba.com" target="_blank" rel="noopener">
+            <div class="link-icon teal-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00B398" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>Sparks Official Site</strong>
+              <span>News, roster &amp; team updates</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ââ Bottom Tab Bar ââ -->
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="schedule" onclick="switchTab('schedule')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/>
+        <line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+      </svg>
+      Schedule
+    </button>
+    <button class="tab-btn" data-tab="highlights" onclick="switchTab('highlights')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5,3 19,12 5,21"/>
+      </svg>
+      Highlights
+    </button>
+    <button class="tab-btn" data-tab="discuss" onclick="switchTab('discuss')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+      </svg>
+      Discussion
+    </button>
+  </div>
+
+</div>
+
+<script>
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+  document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
+  document.querySelector('.tab-content').scrollTop = 0;
+}
+</script>
+
+</body>
+</html>
