@@ -233,6 +233,119 @@
   .link-icon.silver-bg { background: rgba(165,172,175,0.12); }
   .link-icon.red-bg { background: rgba(192,57,43,0.18); }
 
+  /* ââ Video embed ââ */
+  .video-featured {
+    margin: 1rem 1rem 0.5rem;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: #000;
+  }
+
+  .video-featured .video-wrap {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+  }
+
+  .video-featured .video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+
+  .video-featured .video-label {
+    padding: 0.6rem 0.85rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--card-bg);
+  }
+
+  .video-featured .video-label svg {
+    width: 16px; height: 16px;
+    stroke: #e74c3c;
+    flex-shrink: 0;
+  }
+
+  /* ââ Shop tab ââ */
+  .shop-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+    margin: 0.75rem 1rem 0;
+  }
+
+  .shop-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+    text-decoration: none;
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .shop-card:hover { border-color: var(--silver); }
+
+  .shop-card-img {
+    width: 100%;
+    aspect-ratio: 1;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .shop-card-img svg {
+    width: 48px; height: 48px;
+    stroke: var(--silver);
+    opacity: 0.7;
+  }
+
+  .shop-card-info {
+    padding: 0.6rem 0.7rem;
+    flex: 1;
+  }
+
+  .shop-card-info strong {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .shop-card-info .shop-price {
+    font-size: 0.7rem;
+    color: var(--silver);
+    margin-top: 0.2rem;
+  }
+
+  .shop-cta {
+    display: block;
+    margin: 1rem 1rem 0.5rem;
+    padding: 0.85rem;
+    text-align: center;
+    background: var(--silver);
+    color: #000;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: opacity 0.2s;
+  }
+
+  .shop-cta:hover { opacity: 0.85; }
+
   .link-text { flex: 1; min-width: 0; }
 
   .link-text strong {
@@ -505,6 +618,17 @@
 
     <!-- âââ HIGHLIGHTS âââ -->
     <div class="tab-panel" id="panel-highlights">
+
+      <div class="video-featured">
+        <div class="video-wrap">
+          <iframe src="https://www.youtube.com/embed/4nqJ1ujIp_Q" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="video-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><polygon points="5,3 19,12 5,21"/></svg>
+          Talk of the Nation
+        </div>
+      </div>
+
       <p class="panel-title">Watch</p>
       <ul class="link-list">
         <li class="link-item">
@@ -641,6 +765,100 @@
       </ul>
     </div>
 
+    <!-- âââ SHOP âââ -->
+    <div class="tab-panel" id="panel-shop">
+      <p class="panel-title">Official Gear</p>
+
+      <div class="shop-grid">
+        <a class="shop-card" href="https://raiderimage.com/3-mens" target="_blank" rel="noopener">
+          <div class="shop-card-img">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M20.38 3.46L16 2 12 5 8 2 3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.47c.06.37.36.65.74.65H8v10c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2V9.81h4.4c.38 0 .68-.28.74-.65l.58-3.47a2 2 0 0 0-1.34-2.23z"/></svg>
+          </div>
+          <div class="shop-card-info">
+            <strong>Jerseys</strong>
+            <div class="shop-price">From $89.99</div>
+          </div>
+        </a>
+        <a class="shop-card" href="https://raiderimage.com/12-headwear" target="_blank" rel="noopener">
+          <div class="shop-card-img">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M2 18h20v2H2zM4 18c0-4 2-8 8-8s8 4 8 8"/><path d="M12 10V4"/><circle cx="12" cy="3" r="1"/></svg>
+          </div>
+          <div class="shop-card-info">
+            <strong>Hats &amp; Caps</strong>
+            <div class="shop-price">From $29.99</div>
+          </div>
+        </a>
+        <a class="shop-card" href="https://raiderimage.com/8-sweatshirts" target="_blank" rel="noopener">
+          <div class="shop-card-img">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 2L8 6H4v4l-2 2 2 2v4h4l4 4 4-4h4v-4l2-2-2-2V6h-4z"/></svg>
+          </div>
+          <div class="shop-card-info">
+            <strong>Hoodies</strong>
+            <div class="shop-price">From $59.99</div>
+          </div>
+        </a>
+        <a class="shop-card" href="https://raiderimage.com/45-fan-gear" target="_blank" rel="noopener">
+          <div class="shop-card-img">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </div>
+          <div class="shop-card-info">
+            <strong>Fan Gear</strong>
+            <div class="shop-price">Flags, decals &amp; more</div>
+          </div>
+        </a>
+        <a class="shop-card" href="https://raiderimage.com/126-exclusives" target="_blank" rel="noopener">
+          <div class="shop-card-img">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
+          <div class="shop-card-info">
+            <strong>Exclusives</strong>
+            <div class="shop-price">Limited edition items</div>
+          </div>
+        </a>
+        <a class="shop-card" href="https://raiderimage.com/11-collectibles" target="_blank" rel="noopener">
+          <div class="shop-card-img">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="shop-card-info">
+            <strong>Collectibles</strong>
+            <div class="shop-price">Signed items &amp; memorabilia</div>
+          </div>
+        </a>
+      </div>
+
+      <a class="shop-cta" href="https://raiderimage.com/" target="_blank" rel="noopener">
+        Browse Full Store â
+      </a>
+
+      <p class="panel-title" style="margin-top:1rem">Also Available At</p>
+      <ul class="link-list">
+        <li class="link-item">
+          <a href="https://www.nflshop.com/las-vegas-raiders/t-25045903+z-9049896-2398406640" target="_blank" rel="noopener">
+            <div class="link-icon silver-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#A5ACAF" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>NFL Shop</strong>
+              <span>Official NFL merchandise &amp; gear</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+        <li class="link-item">
+          <a href="https://www.fanatics.com/nfl/las-vegas-raiders/o-3510+t-47133738+z-90845-2958498974" target="_blank" rel="noopener">
+            <div class="link-icon silver-bg">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#A5ACAF" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+            </div>
+            <div class="link-text">
+              <strong>Fanatics</strong>
+              <span>Jerseys, apparel &amp; accessories</span>
+            </div>
+            <div class="link-arrow">âº</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+
   </div><!-- /tab-content -->
 
   <!-- ââ Bottom Tab Bar ââ -->
@@ -657,6 +875,12 @@
         <polygon points="5,3 19,12 5,21"/>
       </svg>
       Highlights
+    </button>
+    <button class="tab-btn" data-tab="shop" onclick="switchTab('shop')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      Shop
     </button>
     <button class="tab-btn" data-tab="discuss" onclick="switchTab('discuss')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
